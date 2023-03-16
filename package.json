@@ -19,7 +19,8 @@
     "lint": "eslint --ignore-path .gitignore .",
     "lint:fix": "eslint --ignore-path .gitignore . --fix",
     "format": "prettier --ignore-path .gitignore --check .",
-    "format:fix": "prettier --ignore-path .gitignore --write ."
+    "format:fix": "prettier --ignore-path .gitignore --write .",
+    "prepare": "husky install"
   },
   "eslintConfig": {
     "extends": [
@@ -48,6 +49,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.3",
     "prettier": "^2.8.4"
   }
 }
