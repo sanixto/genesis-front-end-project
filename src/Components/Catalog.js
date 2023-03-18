@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 import { useToken } from '../TokenContext';
 import handlerErrors from '../handlerErrors';
+import { usePage } from '../PageContext';
 
 const fetchCourses = (tok) => {
   const url = 'https://api.wisey.app/api/v1/core/preview-courses';
@@ -22,13 +23,23 @@ function Catalog() {
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState(null);
 
-  const page = 1;
-  const visiblСourses = courses.slice((page - 1) * 10, page * 10);
+  const [pageInfo, setPageInfo] = usePage();
+
+  const visiblСourses = courses.slice(
+    (pageInfo.curPage - 1) * 10,
+    pageInfo.curPage * 10
+  );
 
   useEffect(() => {
     if (token)
       fetchCourses(token)
-        .then((data) => setCourses(data))
+        .then((data) => {
+          setCourses(data);
+          setPageInfo((prev) => ({
+            ...prev,
+            totalPages: Math.ceil(data.length / 10),
+          }));
+        })
         .catch((err) => setError(err));
   }, [token]);
 

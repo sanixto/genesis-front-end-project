@@ -1,15 +1,15 @@
-import Container from 'react-bootstrap/Container';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import Catalog from './Components/Catalog';
 import { TokenProvider } from './TokenContext';
+import { PageProvider } from './PageContext';
+import Catalog from './Components/Catalog';
 
 function App() {
   return (
     <TokenProvider>
-      <Container>
+      <PageProvider>
         <Catalog />
-      </Container>
+      </PageProvider>
     </TokenProvider>
   );
 }
