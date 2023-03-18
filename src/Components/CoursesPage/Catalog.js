@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
-import { useToken } from '../TokenContext';
-import handlerErrors from '../handlerErrors';
-import { usePage } from '../PageContext';
+import { useToken } from '../../TokenContext';
+import handlerErrors from '../../handlerErrors';
+import { usePage } from './PageContext';
 
 const fetchCourses = (tok) => {
   const url = 'https://api.wisey.app/api/v1/core/preview-courses';

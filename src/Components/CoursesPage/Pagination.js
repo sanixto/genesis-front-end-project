@@ -1,5 +1,5 @@
 import { Pagination as PaginationReact } from 'react-bootstrap';
-import { usePage } from '../PageContext';
+import { usePage } from './PageContext';
 
 function Pagination() {
   const items = [];
