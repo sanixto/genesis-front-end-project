@@ -1,7 +1,12 @@
 import './App.css';
+import { TokenProvider } from './TokenContext';
 
 function App() {
-  return <div>App</div>;
+  return (
+    <TokenProvider>
+      <div>App</div>
+    </TokenProvider>
+  );
 }
 
 export default App;
