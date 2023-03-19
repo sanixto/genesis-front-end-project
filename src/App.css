@@ -5,3 +5,34 @@
 .course-card:hover {
   box-shadow: 0 0 20px 1px #000;
 }
+
+h1 {
+  font-size: 3em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+h3 {
+  font-size: 1.5em;
+}
+
+p,
+pre {
+  font-size: 1em;
+}
+
+.locked-lesson:hover {
+  background-color: rgb(191, 186, 186);
+  text-align: center;
+}
+
+.locked-lesson:hover strong {
+  visibility: visible;
+  color: #0e0e0e;
+}
+
+.locked-lesson:hover span {
+  display: none;
+}
