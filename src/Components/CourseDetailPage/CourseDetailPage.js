@@ -19,6 +19,11 @@ const fetchCourse = (id, tok) => {
   );
 };
 
+const setLesson = (courseId, lesson, setLessonState) => {
+  localStorage.setItem(courseId, JSON.stringify(lesson));
+  setLessonState(lesson);
+};
+
 function CourseDetailPage() {
   const [token] = useToken();
   const { courseId } = useParams();
@@ -29,17 +34,21 @@ function CourseDetailPage() {
   const [curLesson, setCurLesson] = useState(null);
 
   useEffect(() => {
+    const lesson = JSON.parse(localStorage.getItem(courseId));
+    setCurLesson(lesson);
+  }, []);
+
+  useEffect(() => {
     if (token)
       fetchCourse(courseId, token)
         .then((data) => {
           setCourse(data);
-          setCurLesson(data.lessons[0]);
+          if (!curLesson) setLesson(courseId, data.lessons[0], setCurLesson);
         })
         .catch((err) => setError(err));
   }, [token, courseId]);
 
   const lessons = course?.lessons;
-
   const urlVideo = curLesson?.link;
   const urlPoster = `${curLesson?.previewImageLink}/lesson-${curLesson?.order}.webp`;
 
@@ -64,13 +73,17 @@ function CourseDetailPage() {
           <h4 className="text-center mt-3">
             Lesson {curLesson?.order}: {curLesson?.title}
           </h4>
-          {urlVideo && urlPoster && (
+          {curLesson?.type === 'video' && (
             <VideoPlayer urlVideo={urlVideo} urlPoster={urlPoster} />
           )}
         </Col>
       </Row>
       <Row>
-        <LessonsList lessons={lessons} setCurLesson={setCurLesson} />
+        <LessonsList
+          lessons={lessons}
+          courseId={courseId}
+          setCurLesson={setCurLesson}
+        />
       </Row>
     </Container>
   ) : (

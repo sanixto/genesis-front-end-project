@@ -1,6 +1,13 @@
 import { ListGroup } from 'react-bootstrap';
 
-function LessonsList({ lessons, setCurLesson }) {
+function LessonsList({ lessons, courseId, setCurLesson }) {
+  const handleListClick = (lesson) => {
+    if (lesson?.status === 'unlocked') {
+      localStorage.setItem(courseId, JSON.stringify(lesson));
+      setCurLesson(lesson);
+    }
+  };
+
   return (
     <ListGroup>
       <h4 className="mt-3">Lessons: {lessons?.length}</h4>
@@ -12,7 +19,7 @@ function LessonsList({ lessons, setCurLesson }) {
           className={`my-2 ${
             lesson?.status === 'locked' && 'opacity-50 locked-lesson'
           }`}
-          onClick={() => lesson?.status === 'unlocked' && setCurLesson(lesson)}
+          onClick={() => handleListClick(lesson)}
         >
           <span>
             Lesson {lesson?.order}: {lesson?.title}
