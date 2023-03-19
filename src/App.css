@@ -1,0 +1,7 @@
+.course-card {
+  height: 100%;
+}
+
+.course-card:hover {
+  box-shadow: 0 0 20px 1px #000;
+}

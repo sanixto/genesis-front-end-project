@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
 import handlerErrors from '../../handlerErrors';
 import { usePage } from './PageContext';
@@ -47,7 +48,7 @@ function Catalog() {
     <Row xs={1} lg={2} className="g-4">
       {visiblСourses.map((course) => (
         <Col key={course.id}>
-          <Card style={{ height: '100%' }}>
+          <Card className="course-card">
             <Card.Img
               variant="top"
               src={`${course.previewImageLink}/cover.webp`}
@@ -60,6 +61,7 @@ function Catalog() {
                 <Card.Text>Skills: {course.meta.skills?.join(', ')}</Card.Text>
               </Card.Footer>
             </Card.Body>
+            <Link to={`/${course.id}`} className="stretched-link" />
           </Card>
         </Col>
       ))}
