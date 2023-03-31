@@ -2,21 +2,8 @@ import { useState, useEffect } from 'react';
 import { Row, Col, Card } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useToken } from '../../TokenContext';
-import handlerErrors from '../../handlerErrors';
 import { usePage } from './PageContext';
-
-const fetchCourses = (tok) => {
-  const url = 'https://api.wisey.app/api/v1/core/preview-courses';
-
-  return fetch(`${url}?${new URLSearchParams({ token: tok })}`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(handlerErrors.get(response.status));
-      }
-      return response.json();
-    })
-    .then((data) => data.courses);
-};
+import API from '../../API/api';
 
 function Catalog() {
   const [token] = useToken();
@@ -33,7 +20,7 @@ function Catalog() {
 
   useEffect(() => {
     if (token)
-      fetchCourses(token)
+      API.fetchCourses(token)
         .then((data) => {
           setCourses(data);
           setPageInfo((prev) => ({

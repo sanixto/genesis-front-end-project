@@ -6,26 +6,13 @@ import React, {
   useMemo,
 } from 'react';
 import { getCookie, setCookie } from './cookie';
-import handlerErrors from './handlerErrors';
+import API from './API/api';
 
 const TokenContext = createContext();
 
 const setTokenCookie = (token) => {
   const date = new Date(Date.now() + 7 * 86400e3);
   setCookie('token', token, { expires: date });
-};
-
-const fetchToken = () => {
-  const url = 'https://api.wisey.app/api/v1/auth/anonymous';
-
-  return fetch(`${url}?${new URLSearchParams({ platform: 'subscriptions' })}`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(handlerErrors.get(response.status));
-      }
-      return response.json();
-    })
-    .then((data) => data.token);
 };
 
 export function TokenProvider({ children }) {
@@ -42,7 +29,7 @@ export function TokenProvider({ children }) {
           if (tokCookie) {
             setToken(tokCookie);
           } else {
-            fetchToken()
+            API.fetchToken()
               .then((tok) => {
                 setToken(tok);
                 setTokenCookie(tok);

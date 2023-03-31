@@ -1,23 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
-import handlerErrors from '../../handlerErrors';
 import { useToken } from '../../TokenContext';
 import VideoPlayer from './VideoPlayer';
 import LessonsList from './LessonsList';
-
-const fetchCourse = (id, tok) => {
-  const url = 'https://api.wisey.app/api/v1/core/preview-courses';
-
-  return fetch(`${url}/${id}?${new URLSearchParams({ token: tok })}`).then(
-    (response) => {
-      if (!response.ok) {
-        throw new Error(handlerErrors.get(response.status));
-      }
-      return response.json();
-    }
-  );
-};
+import API from '../../API/api';
 
 const setLesson = (courseId, lesson, setLessonState) => {
   localStorage.setItem(courseId, JSON.stringify(lesson));
@@ -40,7 +27,7 @@ function CourseDetailPage() {
 
   useEffect(() => {
     if (token)
-      fetchCourse(courseId, token)
+      API.fetchCourse(token, courseId)
         .then((data) => {
           setCourse(data);
           if (!curLesson) setLesson(courseId, data.lessons[0], setCurLesson);
